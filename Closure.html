@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closure and Lexical Scope</title>
+  </head>
+  <body>
+    <button id="orange">Orange</button>
+    <button id="red">Red</button>
+  </body>
+</html>
+
+<script>
+  //Examples--
+  function outerFn() {
+    let name = "Aman";
+    function innerFn() {
+      console.log(name);
+    }
+    return innerFn;
+  }
+  const outputOne = outerFn();
+  outputOne();
+
+  //--
+  function init() {
+    let name = "Mozilla";
+    function displayName() {
+      console.log(name);
+    }
+    displayName();
+  }
+  init();
+
+  //--
+  function counter() {
+    let count = 0;
+    return function () {
+      count++;
+      return count;
+    };
+  }
+  let increment = counter();
+  console.log(increment());
+  console.log(increment());
+  console.log(increment());
+  console.log(increment());
+</script>
+
+<script>
+  //Partical use of closures
+  //Maintaining State in Asynchronous Code
+  function createAsync(message, delay) {
+    setTimeout(function () {
+      console.log(message);
+    }, delay);
+  }
+  createAsync("Hello after 1 second", 1000);
+  createAsync("Hello after 2 second", 2000);
+
+  //--
+  document.getElementById("orange").onclick = clickHandler("orange");
+  document.getElementById("red").onclick = clickHandler("red");
+  function clickHandler(data) {
+    return function inner() {
+      document.body.style.backgroundColor = `${data}`;
+    };
+  }
+</script>
